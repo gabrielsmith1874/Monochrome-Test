@@ -201,8 +201,15 @@ class Particle {
                 const dist = Math.sqrt(dx*dx + dy*dy);
                 const baseAngle = Math.atan2(dy, dx);
                 const newAngle = baseAngle + this.transitionAngle;
-                drawX = cx + Math.cos(newAngle) * dist;
-                drawY = cy + Math.sin(newAngle) * dist;
+                
+                // Suction Effect: Pull into center based on warpFactor
+                // Stars get sucked into the black hole (center)
+                // ACCELERATION: Use power function so it starts slow and speeds up visibly
+                const suctionProgress = Math.pow(warpFactor, 2); 
+                const suctionScale = Math.max(0.01, 1 - (suctionProgress * 1.2));
+                
+                drawX = cx + Math.cos(newAngle) * (dist * suctionScale);
+                drawY = cy + Math.sin(newAngle) * (dist * suctionScale);
             }
             if (this.transitionZ) {
                 drawZ = this.transitionZ;
@@ -250,10 +257,28 @@ class Particle {
                  ctx.fill();
              }
              else {
-                 // Twist - just dots
-                 ctx.arc(drawX, drawY, actualSize, 0, Math.PI * 2);
-                 ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-                 ctx.fill();
+                 // Twist - Spiral Trails (Spaghettification)
+                 const cx = width / 2;
+                 const cy = height / 2;
+                 
+                 // Calculate tail position for speed effect
+                 const currentAngle = Math.atan2(drawY - cy, drawX - cx);
+                 const currentDist = Math.sqrt(Math.pow(drawX - cx, 2) + Math.pow(drawY - cy, 2));
+                 
+                 // Tail lags behind and is further out
+                 const tailLag = 0.1 + (warpFactor * 0.2);
+                 const stretchFactor = 1.1 + (warpFactor * 0.8); // Stretch more as they speed up
+                 
+                 const tailAngle = currentAngle - (tailLag * animationDirection);
+                 const tailDist = currentDist * stretchFactor;
+                 
+                 const tailX = cx + Math.cos(tailAngle) * tailDist;
+                 const tailY = cy + Math.sin(tailAngle) * tailDist;
+                 
+                 ctx.beginPath();
+                 ctx.moveTo(drawX, drawY);
+                 ctx.lineTo(tailX, tailY);
+                 ctx.stroke();
              }
         } else {
             ctx.arc(drawX, drawY, actualSize, 0, Math.PI * 2);
@@ -1133,7 +1158,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initContactInteractions() {
-    const emailLink = document.querySelector('.satellite-email');
+    const emailLink = document.querySelector('.node-email');
     if (emailLink) {
         emailLink.addEventListener('click', (e) => {
             e.preventDefault();
@@ -1142,16 +1167,18 @@ function initContactInteractions() {
             // Try to copy to clipboard
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(email).then(() => {
-                    const valueSpan = emailLink.querySelector('.satellite-value');
+                    const valueSpan = emailLink.querySelector('.holo-value');
                     const originalText = valueSpan.textContent;
                     
                     // Visual Feedback
-                    valueSpan.textContent = 'Copied to Clipboard!';
+                    valueSpan.textContent = 'COPIED TO CLIPBOARD';
                     valueSpan.style.color = '#4ade80'; // Green success color
+                    valueSpan.style.textShadow = '0 0 10px #4ade80';
                     
                     setTimeout(() => {
                         valueSpan.textContent = originalText;
                         valueSpan.style.color = '';
+                        valueSpan.style.textShadow = '';
                     }, 2000);
                 }).catch(err => {
                     console.error('Failed to copy: ', err);
@@ -1407,21 +1434,7 @@ function initAllTextSystems() {
         density: 3
     }));
 
-    // 6. Contact Labels (Satellites)
-    const labelOptions = {
-        fontSize: 16,
-        fontFamily: "'Courier New', monospace",
-        density: 1,
-        alignment: 'left',
-        padding: 20,
-        mouseRadius: 30,
-        mouseForce: 5,
-        color: '#b3b3b3'
-    };
-
-    textSystems.push(new ParticleTextSystem('email-label-canvas', 'EMAIL', labelOptions));
-    textSystems.push(new ParticleTextSystem('linkedin-label-canvas', 'LINKEDIN', labelOptions));
-    textSystems.push(new ParticleTextSystem('github-label-canvas', 'GITHUB', labelOptions));
+    // 6. Contact Labels (Removed - using Holographic CSS)
     
     // Start loop
     animateTextSystems();
