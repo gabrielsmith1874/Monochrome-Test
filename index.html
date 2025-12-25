@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gabriel Smith | CS Student & Developer</title>
+    <meta name="description" content="Portfolio of Gabriel Smith, a Computer Science student at University of Toronto specializing in AI, Algorithms, and Data Structures.">
+    <link rel="stylesheet" href="style.css">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header / Navigation -->
+    <header class="site-header">
+        <div class="logo"></div> <!-- Logo Removed -->
+        <nav>
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="#contact" class="btn btn-primary">Get In Touch</a>
+    </header>
+
+    <!-- Constellation Canvas (Moved outside sections for persistence) -->
+    <canvas id="constellation-canvas"></canvas>
+    <canvas id="planet-canvas"></canvas>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="section-content-wrapper">
+            <div class="hero-content fade-in-up">
+                <!-- Replaced static H1 with Particle Canvas -->
+                <div class="canvas-wrapper hero-canvas-wrapper">
+                    <canvas id="hero-text-canvas" class="particle-text-canvas"></canvas>
+                    <h1 class="visually-hidden">GABRIEL SMITH</h1>
+                </div>
+                
+                <div class="hero-subtitle-wrapper">
+                    <h2>Systems Developer & Tester</h2>
+                </div>
+                <p class="hero-description">Modernizing healthcare systems at the Government of Ontario. <br>Specializing in full-stack development, AI, and accessible software.</p>
+                
+                <div class="hero-actions">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="#contact" class="btn btn-secondary">Contact Me</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section (Timeline) -->
+    <section id="experience" class="experience-section">
+        <div class="section-content-wrapper">
+            <div class="container">
+                <div class="canvas-wrapper section-title-wrapper">
+                    <canvas id="experience-text-canvas" class="particle-text-canvas section-header-canvas"></canvas>
+                    <h2 class="visually-hidden">Experience</h2>
+                </div>
+                <div class="timeline">
+                    
+                    <!-- Timeline Item 1 (New) -->
+                    <div class="timeline-item fade-in-up">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">May 2025 - Present</span>
+                            <h3>Systems Developer & Tester</h3>
+                            <h4 class="company">Ontario Government | Gouvernement de l’Ontario</h4>
+                            <p class="location" style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 0.5rem;">Toronto, Ontario, Canada · Hybrid</p>
+                            <p><strong>Assistive Devices Program (ADP) Unit</strong></p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.2rem; margin-bottom: 0.8rem;">
+                                <li>Upgraded critical legacy systems from JSP 1.2 to 4.0, enhancing security and performance.</li>
+                                <li>Designed and implemented fixes for complex system bugs.</li>
+                                <li>Managed workflows using Jira and DevOps practices.</li>
+                                <li>Designed and executed comprehensive test plans, including regression testing.</li>
+                            </ul>
+                            <p class="award" style="color: #ffd700;"><strong>🏆 Award:</strong> Second runner up of the 2024 Product Team Award.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="timeline-item fade-in-up">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">Sept 2022 - Present</span>
+                            <h3>Student @ UofT</h3>
+                            <p>Specializing in AI, Algorithms, and Data Structures. Designed complex algorithms (graphs, trees, flows) and created AI using Minimax, Backtracking, and A*. Built accessible Java projects with Google Cloud APIs.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="timeline-item fade-in-up">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">July 2024 - Present</span>
+                            <h3>Customer Service</h3>
+                            <h4 class="company">Farm Boy Inc.</h4>
+                            <p>Excelled in customer service and inventory management. Offered leadership roles quickly due to strong work ethic and delegation skills.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 3 -->
+                    <div class="timeline-item fade-in-up">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">Aug 2021 - Sept 2021</span>
+                            <h3>Assembler</h3>
+                            <h4 class="company">Dana Inc.</h4>
+                            <p>Assembled electronic components with zero defects. Maintained high quality standards and met production targets in a fast-paced environment.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="orbit-wrapper">
+            <div class="orbit-center">
+                <div class="canvas-wrapper project-canvas-wrapper">
+                    <canvas id="projects-text-canvas" class="particle-text-canvas"></canvas>
+                    <h2 class="visually-hidden">PROJECTS</h2>
+                </div>
+            </div>
+            <div class="orbit-container">
+                <div class="orbit-track">
+                    <!-- Project 1 -->
+                    <div class="project-node" style="--i:0">
+                        <a href="https://github.com/gabrielsmith1874" target="_blank" class="project-card">
+                            <div class="node-icon"></div>
+                            <div class="card-content">
+                                <h3>Battleship AI</h3>
+                                <p>Constraint satisfaction problem solver using AC-3 & MRV heuristic.</p>
+                                <span class="tech-tag">Python</span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Project 2 -->
+                    <div class="project-node" style="--i:1">
+                        <a href="https://github.com/gabrielsmith1874" target="_blank" class="project-card">
+                            <div class="node-icon"></div>
+                            <div class="card-content">
+                                <h3>Checkers AI</h3>
+                                <p>Minimax algorithm with alpha-beta pruning and PyGame interface.</p>
+                                <span class="tech-tag">PyGame</span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Project 3 -->
+                    <div class="project-node" style="--i:2">
+                        <a href="https://github.com/gabrielsmith1874" target="_blank" class="project-card">
+                            <div class="node-icon"></div>
+                            <div class="card-content">
+                                <h3>Text Adventure</h3>
+                                <p>Accessible NLP game with Google Cloud Voice/TTS integration.</p>
+                                <span class="tech-tag">Java/GCP</span>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Project 4 -->
+                    <div class="project-node" style="--i:3">
+                        <a href="https://github.com/gabrielsmith1874" target="_blank" class="project-card">
+                            <div class="node-icon"></div>
+                            <div class="card-content">
+                                <h3>Huffman Zip</h3>
+                                <p>Lossless compression tool achieving >80% efficiency.</p>
+                                <span class="tech-tag">Algos</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section (Redesigned: 3D Cloud) -->
+    <section id="skills" class="skills-section">
+        <div class="skills-header-container">
+             <div class="canvas-wrapper skills-canvas-wrapper">
+                <canvas id="skills-text-canvas" class="particle-text-canvas"></canvas>
+                <h2 class="visually-hidden">SKILLS</h2>
+             </div>
+        </div>
+        <div class="skills-container">
+            <div id="skills-cloud"></div>
+            <div id="skill-detail-overlay">
+                <h3 id="skill-title"></h3>
+                <p id="skill-desc"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <footer id="contact" class="site-footer">
+        <div class="section-content-wrapper">
+            <div class="contact-universe">
+                
+                <!-- Pluribus Text Canvas -->
+                <div class="canvas-wrapper contact-canvas-wrapper">
+                    <canvas id="contact-text-canvas" class="particle-text-canvas"></canvas>
+                </div>
+                
+                <!-- Contact Satellites -->
+                <div class="contact-satellites">
+                    <a href="mailto:gabrielsmith1874@gmail.com" class="satellite satellite-email">
+                        <div class="satellite-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        </div>
+                        <div class="satellite-info">
+                            <div class="canvas-wrapper label-canvas-wrapper">
+                                <canvas id="email-label-canvas" class="particle-text-canvas"></canvas>
+                            </div>
+                            <span class="satellite-value">gabrielsmith1874@gmail.com</span>
+                        </div>
+                        <div class="satellite-trail"></div>
+                    </a>
+                    
+                    <a href="https://linkedin.com/in/gabriel-smith-b3b366253" target="_blank" class="satellite satellite-linkedin">
+                        <div class="satellite-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        </div>
+                        <div class="satellite-info">
+                            <div class="canvas-wrapper label-canvas-wrapper">
+                                <canvas id="linkedin-label-canvas" class="particle-text-canvas"></canvas>
+                            </div>
+                            <span class="satellite-value">Connect Professionally</span>
+                        </div>
+                        <div class="satellite-trail"></div>
+                    </a>
+                    
+                    <a href="https://github.com/gabrielsmith1874" target="_blank" class="satellite satellite-github">
+                        <div class="satellite-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                        </div>
+                        <div class="satellite-info">
+                            <div class="canvas-wrapper label-canvas-wrapper">
+                                <canvas id="github-label-canvas" class="particle-text-canvas"></canvas>
+                            </div>
+                            <span class="satellite-value">View My Code</span>
+                        </div>
+                        <div class="satellite-trail"></div>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
