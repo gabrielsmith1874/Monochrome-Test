@@ -1124,9 +1124,11 @@ function updateProjectOrbit() {
     // Container: rotateX(60deg) rotateZ(orbitRotation)
     orbitContainer.style.transform = `rotateX(60deg) rotateZ(${orbitRotation}deg)`;
 
+    const angleStep = 360 / projectCards.length;
+
     projectCards.forEach((card, index) => {
         // Calculate total angle for this card
-        const nodeAngle = 90 * index;
+        const nodeAngle = angleStep * index;
         const totalAngle = nodeAngle + orbitRotation;
         
         // Counter rotate to keep upright
@@ -1407,33 +1409,33 @@ function initAllTextSystems() {
     // 1. Hero
     textSystems.push(new ParticleTextSystem('hero-text-canvas', 'GABRIEL SMITH', {
         fontSize: 100,
-        density: 5, // Optimized: Increased from 3
+        density: 4, // Updated for consistency
         mouseForce: 20
     }));
     
     // 2. Experience
     textSystems.push(new ParticleTextSystem('experience-text-canvas', 'EXPERIENCE', {
         fontSize: 80,
-        density: 5, // Optimized: Increased from 3
+        density: 4, // Updated for consistency
         alignment: 'left'
     }));
     
     // 3. Projects
     textSystems.push(new ParticleTextSystem('projects-text-canvas', 'PROJECTS', {
-        fontSize: 60,
-        density: 5 // Optimized: Increased from 3
+        fontSize: 80,
+        density: 4 // Optimized: Balanced for visibility
     }));
     
     // 4. Skills
     textSystems.push(new ParticleTextSystem('skills-text-canvas', 'SKILLS', {
         fontSize: 80,
-        density: 5 // Optimized: Increased from 3
+        density: 4 // Updated for consistency
     }));
     
     // 5. Contact
     textSystems.push(new ParticleTextSystem('contact-text-canvas', 'CONTACT', {
         fontSize: 120,
-        density: 5 // Optimized: Increased from 3
+        density: 4 // Updated for consistency
     }));
 
     // 6. Contact Labels (Removed - using Holographic CSS)

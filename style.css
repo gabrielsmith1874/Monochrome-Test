@@ -281,6 +281,7 @@ body.show-planet #constellation-canvas {
     overflow: hidden;
     /* Remove background, let fixed canvas show through */
     background: transparent;
+    padding-top: 0; /* Center vertically without header offset */
 }
 
 /* --- Transition Effects --- */
@@ -778,12 +779,13 @@ section.past, footer.past {
     height: 100vh;
     overflow: hidden;
     perspective: 1000px;
+    padding-top: 0; /* Center vertically without header offset */
 }
 
 .orbit-wrapper {
     position: relative;
-    width: 600px;
-    height: 600px;
+    width: 800px;
+    height: 800px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -816,6 +818,7 @@ section.past, footer.past {
     /* Animation handled by JS for interactivity */
     transform: rotateX(60deg);
     cursor: grab;
+    top: -50px; /* Correct for perspective shift to center text visually */
 }
 
 .orbit-container:active {
@@ -839,18 +842,18 @@ section.past, footer.past {
     height: 0;
     transform-style: preserve-3d;
     /* Position on ring */
-    transform: rotateZ(calc(90deg * var(--i))) translateY(-300px);
+    transform: rotateZ(calc(60deg * var(--i))) translateY(-450px);
 }
 
 .project-card {
     /* Transforms handled by JS */
-    background: rgba(0, 0, 0, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 1.5rem;
-    backdrop-filter: blur(5px);
-    border-radius: 8px;
-    opacity: 0.7;
-    width: 220px;
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 2rem;
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    opacity: 0.8;
+    width: 280px;
     transform-origin: center center;
     display: block;
     text-decoration: none;
@@ -920,7 +923,7 @@ section.past, footer.past {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    width: 100%;
+    width: 100%;0; /* Center vertically without header offset */
     padding-top: 80px;
 }
 
