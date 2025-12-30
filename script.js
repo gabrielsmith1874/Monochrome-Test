@@ -29,7 +29,8 @@ function resize() {
     height = canvas.height = window.innerHeight;
 
     // High Density Calculation
-    const targetCount = Math.max(50, Math.floor((width * height) / 4000));
+    // Optimized: Increased divisor from 4000 to 8000 to reduce particle count for better performance
+    const targetCount = Math.max(30, Math.floor((width * height) / 8000));
     
     // Smoothly adjust particle count without wiping
     if (particles.length < targetCount) {
@@ -346,8 +347,9 @@ function drawCelestialBody() {
         let mx = smoothMouse.x;
         let my = smoothMouse.y;
 
-        const latSteps = 32; // Higher density for detail
-        const lonSteps = 48; 
+        // Optimized: Reduced steps from 32/48 to 16/24 to improve rendering performance
+        const latSteps = 16; 
+        const lonSteps = 24; 
         let points = [];
 
         // 1. Generate Mesh Points
@@ -1405,33 +1407,33 @@ function initAllTextSystems() {
     // 1. Hero
     textSystems.push(new ParticleTextSystem('hero-text-canvas', 'GABRIEL SMITH', {
         fontSize: 100,
-        density: 3,
+        density: 5, // Optimized: Increased from 3
         mouseForce: 20
     }));
     
     // 2. Experience
     textSystems.push(new ParticleTextSystem('experience-text-canvas', 'EXPERIENCE', {
         fontSize: 80,
-        density: 3,
+        density: 5, // Optimized: Increased from 3
         alignment: 'left'
     }));
     
     // 3. Projects
     textSystems.push(new ParticleTextSystem('projects-text-canvas', 'PROJECTS', {
         fontSize: 60,
-        density: 3
+        density: 5 // Optimized: Increased from 3
     }));
     
     // 4. Skills
     textSystems.push(new ParticleTextSystem('skills-text-canvas', 'SKILLS', {
         fontSize: 80,
-        density: 3
+        density: 5 // Optimized: Increased from 3
     }));
     
     // 5. Contact
     textSystems.push(new ParticleTextSystem('contact-text-canvas', 'CONTACT', {
         fontSize: 120,
-        density: 3
+        density: 5 // Optimized: Increased from 3
     }));
 
     // 6. Contact Labels (Removed - using Holographic CSS)

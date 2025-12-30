@@ -340,6 +340,7 @@ section, footer {
     align-items: center;
     padding-top: 80px; /* Space for header */
     z-index: 1;
+    will-change: transform, opacity, filter;
 }
 
 section.active, footer.active {
