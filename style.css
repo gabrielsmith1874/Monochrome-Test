@@ -842,7 +842,7 @@ section.past, footer.past {
     height: 0;
     transform-style: preserve-3d;
     /* Position on ring */
-    transform: rotateZ(calc(60deg * var(--i))) translateY(-450px);
+    transform: rotateZ(calc(72deg * var(--i))) translateY(-450px);
 }
 
 .project-card {

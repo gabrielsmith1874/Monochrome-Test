@@ -1466,7 +1466,4 @@ function animateTextSystems() {
     requestAnimationFrame(animateTextSystems);
 }
 
-// --- OLD CONTACT TEXT CODE REMOVED (Replaced by Class) ---
-// (The previous initContactText and animateContact functions are deleted)
-
 
