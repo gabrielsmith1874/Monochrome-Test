@@ -8,6 +8,7 @@ let particles = [];
 let particleCount;
 const connectionDistance = 120; // Distance to connect particles
 const mouseDistance = 250; // Grab radius
+let resizeTimer;
 
 // Warp Effect State
 let warpFactor = 0; // 0 = normal, 1 = full warp
@@ -616,8 +617,12 @@ function animate() {
 
 // Event Listeners for Canvas
 window.addEventListener('resize', () => {
-    resize();
-    // initParticles(); // Removed to prevent regeneration on resize
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        resize();
+        resizeTextSystems();
+        // initParticles(); // Removed to prevent regeneration on resize
+    }, 150);
 });
 
 // Event Listeners for Mouse Interactivity
@@ -887,6 +892,7 @@ const skillTitle = document.getElementById('skill-title');
 const skillDesc = document.getElementById('skill-desc');
 
 let cloudRadius = 250;
+let skillItems = [];
 let cloudRotation = { x: 0, y: 0 };
 let isDragging = false;
 let lastMouse = { x: 0, y: 0 };
@@ -930,6 +936,7 @@ function initSkillsCloud() {
 
         cloudContainer.appendChild(el);
     });
+    skillItems = Array.from(cloudContainer.querySelectorAll('.skill-item'));
 
     // Drag Events
     cloudContainer.addEventListener('mousedown', (e) => {
@@ -986,6 +993,11 @@ function hideSkillDetail() {
 function updateSkillsCloud() {
     if (!cloudContainer) return;
 
+    if (currentSectionIndex !== 3 && !isDragging) {
+        requestAnimationFrame(updateSkillsCloud);
+        return;
+    }
+
     if (!isDragging && !isHoveringSkill) {
         // Apply momentum
         cloudRotation.x += rotationMomentum.x;
@@ -1004,9 +1016,7 @@ function updateSkillsCloud() {
         }
     }
 
-    const items = document.querySelectorAll('.skill-item');
-    
-    items.forEach(item => {
+    skillItems.forEach(item => {
         const x = parseFloat(item.dataset.x);
         const y = parseFloat(item.dataset.y);
         const z = parseFloat(item.dataset.z);
@@ -1040,11 +1050,15 @@ let isOrbitDragging = false;
 let lastOrbitMouseX = 0;
 let orbitMomentum = 0;
 let orbitDragStartX = 0; // Track start position to distinguish click vs drag
+let orbitContainer;
+let projectCards = [];
 
 function initProjectOrbit() {
     const wrapper = document.querySelector('.orbit-wrapper');
     
     if (!wrapper) return;
+    orbitContainer = wrapper.querySelector('.orbit-container');
+    projectCards = Array.from(wrapper.querySelectorAll('.project-card'));
 
     wrapper.addEventListener('mousedown', (e) => {
         isOrbitDragging = true;
@@ -1069,8 +1083,7 @@ function initProjectOrbit() {
     });
     
     // Prevent native drag and accidental clicks on links
-    const links = wrapper.querySelectorAll('a');
-    links.forEach(link => {
+    projectCards.forEach(link => {
         link.setAttribute('draggable', 'false');
         
         link.addEventListener('dragstart', (e) => {
@@ -1108,10 +1121,8 @@ function initProjectOrbit() {
 }
 
 function updateProjectOrbit() {
-    const orbitContainer = document.querySelector('.orbit-container');
-    const projectCards = document.querySelectorAll('.project-card');
-    
     if (!orbitContainer) return;
+    if (currentSectionIndex !== 2 && !isOrbitDragging && Math.abs(orbitMomentum) < 0.01) return;
 
     if (!isOrbitDragging) {
         orbitRotation += orbitSpeed;
@@ -1232,12 +1243,6 @@ class ParticleTextSystem {
         // Initial Setup
         this.resize();
         this.initParticles();
-        
-        // Bind resize
-        window.addEventListener('resize', () => {
-            this.resize();
-            this.initParticles();
-        });
     }
     
     resize() {
@@ -1404,44 +1409,72 @@ class ParticleTextSystem {
 
 // Manager for all text systems
 const textSystems = [];
-
-function initAllTextSystems() {
-    // 1. Hero
-    textSystems.push(new ParticleTextSystem('hero-text-canvas', 'GABRIEL SMITH', {
+const textSystemConfigs = [
+    ['hero-text-canvas', 'GABRIEL SMITH', {
         fontSize: 100,
         density: 4, // Updated for consistency
         mouseForce: 20
-    }));
-    
-    // 2. Experience
-    textSystems.push(new ParticleTextSystem('experience-text-canvas', 'EXPERIENCE', {
+    }],
+    ['experience-text-canvas', 'EXPERIENCE', {
         fontSize: 80,
         density: 4, // Updated for consistency
         alignment: 'left'
-    }));
-    
-    // 3. Projects
-    textSystems.push(new ParticleTextSystem('projects-text-canvas', 'PROJECTS', {
+    }],
+    ['projects-text-canvas', 'PROJECTS', {
         fontSize: 80,
         density: 4 // Optimized: Balanced for visibility
-    }));
-    
-    // 4. Skills
-    textSystems.push(new ParticleTextSystem('skills-text-canvas', 'SKILLS', {
+    }],
+    ['skills-text-canvas', 'SKILLS', {
         fontSize: 80,
         density: 4 // Updated for consistency
-    }));
-    
-    // 5. Contact
-    textSystems.push(new ParticleTextSystem('contact-text-canvas', 'CONTACT', {
+    }],
+    ['contact-text-canvas', 'CONTACT', {
         fontSize: 120,
         density: 4 // Updated for consistency
-    }));
+    }]
+];
+let textSystemsStarted = false;
 
-    // 6. Contact Labels (Removed - using Holographic CSS)
-    
-    // Start loop
-    animateTextSystems();
+function initAllTextSystems() {
+    ensureTextSystem(0);
+    scheduleOffscreenTextSystems();
+
+    if (!textSystemsStarted) {
+        textSystemsStarted = true;
+        animateTextSystems();
+    }
+}
+
+function scheduleOffscreenTextSystems() {
+    let index = 1;
+    const schedule = window.requestIdleCallback || ((callback) => setTimeout(callback, 80));
+    const createNext = () => {
+        if (index >= textSystemConfigs.length) return;
+        ensureTextSystem(index);
+        index++;
+        schedule(createNext, { timeout: 1000 });
+    };
+
+    schedule(createNext, { timeout: 1000 });
+}
+
+function ensureTextSystem(index) {
+    if (textSystems[index]) return textSystems[index];
+
+    const config = textSystemConfigs[index];
+    if (!config) return null;
+
+    const [canvasId, text, options] = config;
+    textSystems[index] = new ParticleTextSystem(canvasId, text, options);
+    return textSystems[index];
+}
+
+function resizeTextSystems() {
+    textSystems.forEach(sys => {
+        if (!sys || !sys.canvas) return;
+        sys.resize();
+        sys.initParticles();
+    });
 }
 
 function animateTextSystems() {
@@ -1453,6 +1486,8 @@ function animateTextSystems() {
     // 3: Skills -> 3
     // 4: Contact -> 4
     
+    ensureTextSystem(currentSectionIndex);
+
     textSystems.forEach((sys, i) => {
         if (sys) {
             // Only activate if it's the current section
@@ -1465,5 +1500,3 @@ function animateTextSystems() {
     
     requestAnimationFrame(animateTextSystems);
 }
-
-
