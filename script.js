@@ -1151,7 +1151,24 @@ function updateProjectOrbit() {
 }
 
 
+function finishStartupLoading(startedAt) {
+    const minLoadTime = 1400;
+    const elapsed = performance.now() - startedAt;
+    const delay = Math.max(0, minLoadTime - elapsed);
+
+    setTimeout(() => {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                document.body.classList.remove('is-loading');
+                document.body.classList.add('is-ready');
+            });
+        });
+    }, delay);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    const loadingStartedAt = performance.now();
+
     // Start Canvas Animation
     resize();
     initParticles();
@@ -1170,6 +1187,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Init Contact Interactions
     initContactInteractions();
+
+    finishStartupLoading(loadingStartedAt);
 });
 
 function initContactInteractions() {

@@ -26,6 +26,197 @@ body {
     width: 100vw;
 }
 
+body.is-loading {
+    cursor: wait;
+}
+
+body.is-loading .site-header,
+body.is-loading section,
+body.is-loading footer,
+body.is-loading #constellation-canvas,
+body.is-loading #planet-canvas {
+    pointer-events: none;
+}
+
+.startup-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.75rem;
+    background:
+        radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.08), transparent 18rem),
+        var(--bg-color);
+    color: var(--text-primary);
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.75s ease, visibility 0.75s ease;
+}
+
+body.is-ready .startup-loader {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loader-constellation {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.28));
+}
+
+.loader-node,
+.loader-core,
+.loader-orbit,
+.loader-link {
+    position: absolute;
+    display: block;
+}
+
+.loader-node,
+.loader-core {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-primary);
+    box-shadow: 0 0 14px rgba(255, 255, 255, 0.85);
+}
+
+.loader-core {
+    top: 72px;
+    left: 72px;
+    width: 8px;
+    height: 8px;
+    animation: loader-pulse 1.5s ease-in-out infinite;
+}
+
+.loader-node {
+    animation: loader-node-pulse 2.4s ease-in-out infinite;
+}
+
+.node-a {
+    top: 20px;
+    left: 70px;
+}
+
+.node-b {
+    top: 62px;
+    right: 16px;
+    animation-delay: 0.2s;
+}
+
+.node-c {
+    bottom: 18px;
+    left: 50px;
+    animation-delay: 0.4s;
+}
+
+.node-d {
+    top: 80px;
+    left: 18px;
+    animation-delay: 0.6s;
+}
+
+.loader-link {
+    top: 74px;
+    left: 75px;
+    width: 72px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.75), transparent);
+    transform-origin: left center;
+    opacity: 0.55;
+    animation: loader-signal 1.8s ease-in-out infinite;
+}
+
+.link-a {
+    transform: rotate(-80deg);
+}
+
+.link-b {
+    transform: rotate(-12deg);
+    animation-delay: 0.2s;
+}
+
+.link-c {
+    transform: rotate(142deg);
+    animation-delay: 0.4s;
+}
+
+.loader-orbit {
+    inset: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.36);
+    border-left-color: transparent;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    animation: loader-spin 1.8s linear infinite;
+}
+
+.loader-orbit::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 13px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--text-primary);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+}
+
+.loader-copy {
+    display: grid;
+    gap: 0.35rem;
+    text-align: center;
+    letter-spacing: 0;
+}
+
+.loader-kicker {
+    color: var(--text-secondary);
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.loader-title {
+    font-size: clamp(1.5rem, 5vw, 3.25rem);
+    font-weight: 800;
+}
+
+@keyframes loader-spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes loader-pulse {
+    0%, 100% { transform: scale(0.9); opacity: 0.75; }
+    50% { transform: scale(1.35); opacity: 1; }
+}
+
+@keyframes loader-node-pulse {
+    0%, 100% { opacity: 0.45; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes loader-signal {
+    0%, 100% { opacity: 0.18; }
+    50% { opacity: 0.8; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .startup-loader,
+    .loader-node,
+    .loader-core,
+    .loader-orbit,
+    .loader-link {
+        animation: none;
+        transition-duration: 0.01ms;
+    }
+}
+
 /* Site Header */
 .site-header {
     position: fixed;

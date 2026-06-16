@@ -11,7 +11,25 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="is-loading">
+
+    <div id="startup-loader" class="startup-loader" role="status" aria-live="polite" aria-label="Loading portfolio">
+        <div class="loader-constellation" aria-hidden="true">
+            <span class="loader-node node-a"></span>
+            <span class="loader-node node-b"></span>
+            <span class="loader-node node-c"></span>
+            <span class="loader-node node-d"></span>
+            <span class="loader-link link-a"></span>
+            <span class="loader-link link-b"></span>
+            <span class="loader-link link-c"></span>
+            <span class="loader-orbit"></span>
+            <span class="loader-core"></span>
+        </div>
+        <div class="loader-copy">
+            <span class="loader-kicker">Booting constellation</span>
+            <span class="loader-title">GABRIEL SMITH</span>
+        </div>
+    </div>
 
     <!-- Header / Navigation -->
     <header class="site-header">
