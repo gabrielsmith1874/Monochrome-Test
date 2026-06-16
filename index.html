@@ -11,7 +11,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
-<body class="is-loading">
+<body>
+    <script>
+        if (localStorage.getItem('startupLoaderSeen') === 'true') {
+            document.body.classList.add('is-ready');
+        } else {
+            document.body.classList.add('is-loading');
+        }
+    </script>
 
     <div id="startup-loader" class="startup-loader" role="status" aria-live="polite" aria-label="Loading portfolio">
         <div class="loader-constellation" aria-hidden="true">

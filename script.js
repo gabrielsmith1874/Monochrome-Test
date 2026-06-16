@@ -1152,6 +1152,8 @@ function updateProjectOrbit() {
 
 
 function finishStartupLoading(startedAt) {
+    if (!document.body.classList.contains('is-loading')) return;
+
     const minLoadTime = 1400;
     const elapsed = performance.now() - startedAt;
     const delay = Math.max(0, minLoadTime - elapsed);
@@ -1159,6 +1161,7 @@ function finishStartupLoading(startedAt) {
     setTimeout(() => {
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
+                localStorage.setItem('startupLoaderSeen', 'true');
                 document.body.classList.remove('is-loading');
                 document.body.classList.add('is-ready');
             });
