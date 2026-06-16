@@ -1348,6 +1348,10 @@ class ParticleTextSystem {
             localMy = rawMouse.y - rect.top;
         }
 
+        this.ctx.fillStyle = this.color;
+        this.ctx.globalAlpha = 1.0; // Full opacity for all dots
+        this.ctx.beginPath();
+
         this.particles.forEach(p => {
             // 1. Return to Origin
             const dx = p.originX - p.x;
@@ -1395,13 +1399,11 @@ class ParticleTextSystem {
             p.x += p.vx;
             p.y += p.vy;
             
-            // Draw with uniform opacity
-            this.ctx.fillStyle = this.color;
-            this.ctx.globalAlpha = 1.0; // Full opacity for all dots
-            this.ctx.beginPath();
+            this.ctx.moveTo(p.x + p.size, p.y);
             this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            this.ctx.fill();
         });
+
+        this.ctx.fill();
         
         this.ctx.globalAlpha = 1.0; // Reset
     }
@@ -1437,25 +1439,11 @@ let textSystemsStarted = false;
 
 function initAllTextSystems() {
     ensureTextSystem(0);
-    scheduleOffscreenTextSystems();
 
     if (!textSystemsStarted) {
         textSystemsStarted = true;
         animateTextSystems();
     }
-}
-
-function scheduleOffscreenTextSystems() {
-    let index = 1;
-    const schedule = window.requestIdleCallback || ((callback) => setTimeout(callback, 80));
-    const createNext = () => {
-        if (index >= textSystemConfigs.length) return;
-        ensureTextSystem(index);
-        index++;
-        schedule(createNext, { timeout: 1000 });
-    };
-
-    schedule(createNext, { timeout: 1000 });
 }
 
 function ensureTextSystem(index) {
